@@ -1,5 +1,8 @@
 TODO:
 
+0.012 Wednesday January 09 10:00:54 PST 2008:
+    - Repackage release with inc/
+
 0.011 Wednesday January 09 01:08:12 PST 2008:
     - Included an example configuration and some more documentation
     - Fixed a test that won't pass if yuicompressor.jar isn't available
