@@ -9,11 +9,11 @@ Catalyst::Plugin::Assets - Manage and minify .css and .js assets in a Catalyst a
 
 =head1 VERSION
 
-Version 0.01
+Version 0.011
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.011';
 
 =head1 SYNOPSIS
 
@@ -64,6 +64,10 @@ File::Assets has the added bonus of assisting with minification and filtering of
 
 =head1 CONFIGURATION
 
+You can configure C::P::Assets by manipulating the $catalyst->config->{assets} hash.
+
+The following settings are available:
+
     path        # A path to automatically look for assets under (e.g. "/static" or "/assets")
 
                 # This path will be automatically prepended to includes, so that instead of
@@ -78,6 +82,46 @@ File::Assets has the added bonus of assisting with minification and filtering of
 
     minify      # '1' to use JavaScript::Minifier and CSS::Minifier for minification
                 # 'yui-compressor:<path-to-yui-compressor-jar>' to use YUI Compressor
+
+
+    stash_var   # The name of the key in the stash that provides the assets object (accessible via $catalyst->stash->{<stash_var}.
+                # By default, the <stash_var> is "assets".
+                # To disable the setting of the stash variable, set <stash_var> to undef
+
+=head2 Example configuration
+
+Here is an example configuration:
+
+    # Under the configuration below, the assets object will automatically
+    # look for assets (.css and .js files) under <home>/root/static/*
+    # If it needs to generate a minified asset, it will deposit the generated asset under <home>/root/static/built/*
+
+    # To turn off minification, set minify to 0
+
+    # Finally, the assets object is also available via $catalyst->stash->{assets} (This is actually the default setting)
+
+    __PACKAGE__->config(
+        
+        name => 'Example',
+
+        assets => {
+
+            path => "/static",
+            output => "built/",
+            minify => 1,
+
+            stash_var => "assets", # This is the default setting
+        },
+
+    );
+
+    # Later, to include "http://localhost/static/example.css", do:
+
+    $catalyst->assets->include("example.css");
+
+    # To include "http://localhost/static/example.js", do:
+
+    $catalyst->assets->include("example.js");
 
 =cut
 

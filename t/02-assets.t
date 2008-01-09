@@ -21,12 +21,16 @@ is($response->content, <<_END_);
 <link rel="stylesheet" type="text/css" href="http://localhost/static/apple.css" />
 _END_
 
-ok($response = request('http://localhost/yui-compressor'));
-is($response->content, <<_END_);
+SKIP: {
+    skip 'install ./yuicompressor.jar to enable this test' unless -e "./yuicompressor.jar";
+
+    ok($response = request('http://localhost/yui-compressor'));
+    is($response->content, <<_END_);
 <link rel="stylesheet" type="text/css" href="http://localhost/static/yui-compressor/assets.css" />
 <script src="http://localhost/static/auto.js" type="text/javascript"></script>
 <script src="http://localhost/static/yui-compressor.js" type="text/javascript"></script>
 _END_
+}
 
 ok($response = request('http://localhost/concat'));
 is($response->content, <<_END_);

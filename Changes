@@ -1,5 +1,8 @@
 TODO:
-    - More configuration explanation
+
+0.011 Wednesday January 09 01:08:12 PST 2008:
+    - Included an example configuration and some more documentation
+    - Fixed a test that won't pass if yuicompressor.jar isn't available
 
 0.01 Tuesday January 08 22:40:17 PST 2008:
     - Initial release
