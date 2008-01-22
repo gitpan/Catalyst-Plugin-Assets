@@ -1,6 +1,6 @@
 ---
 name: Catalyst-Plugin-Assets
-version: 0.012
+version: 0.020
 author:
   - 'Robert Krimen <rkrimen@cpan.org>'
 abstract: Manage and minify .css and .js assets in a Catalyst application
@@ -21,8 +21,8 @@ build_requires:
 provides:
   Catalyst::Plugin::Assets:
     file: lib/Catalyst/Plugin/Assets.pm
-    version: 0.012
-generated_by: Module::Build version 0.2808
+    version: 0.020
+generated_by: Module::Build version 0.2806
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2

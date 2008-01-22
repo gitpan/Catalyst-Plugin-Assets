@@ -9,11 +9,11 @@ Catalyst::Plugin::Assets - Manage and minify .css and .js assets in a Catalyst a
 
 =head1 VERSION
 
-Version 0.012
+Version 0.020
 
 =cut
 
-our $VERSION = '0.012';
+our $VERSION = '0.020';
 
 =head1 SYNOPSIS
 
@@ -60,11 +60,13 @@ Note that Catalyst::Plugin::Assets does not serve files directly, it will work w
 
 File::Assets is a tool for managing JavaScript and CSS assets in a (web) application. It allows you to "publish" assests in one place after having specified them in different parts of the application (e.g. throughout request and template processing phases).
 
-File::Assets has the added bonus of assisting with minification and filtering of assets. Support is built-in for YUI Compressor (L<http://developer.yahoo.com/yui/compressor/>), L<JavaScript::Minifier>, and L<CSS::Minifier>. Filtering is fairly straightforward to implement, so it's a good place to start if need a JavaScript or CSS preprocessor (e.g. something like HAML L<http://haml.hamptoncatlin.com/>)
+File::Assets has the added bonus of assisting with minification and filtering of assets. Support is built-in for YUI Compressor (L<http://developer.yahoo.com/yui/compressor/>), L<JavaScript::Minifier>, and L<CSS::Minifier>. Filtering is fairly straightforward to implement, so it's a good place to start if need a JavaScript or CSS preprocessor (e.g. something like SASS L<http://haml.hamptoncatlin.com/docs/rdoc/classes/Sass.html/>)
 
 =head1 CONFIGURATION
 
-You can configure C::P::Assets by manipulating the $catalyst->config->{assets} hash.
+You can configure C::P::Assets by manipulating the $catalyst->config->{'Plugin::Assets'} hash.
+
+Note, in previous versions, the configuration location was $catalyst->config->{assets}
 
 The following settings are available:
 
@@ -139,7 +141,21 @@ sub setup {
     
     $catalyst->NEXT::setup(@_);
     
-    my $config = $catalyst->config->{assets} ||= {};
+    my $config;
+    if ($config = $catalyst->config->{'Plugin::Assets'}) {
+    }
+    elsif ($config = $catalyst->config->{assets}) {
+        warn
+            "\n*** Setting ${catalyst}->config->{assets} has been deprecated!\n" .
+            "*** Please update your configuration to use ${catalyst}->config->{'Plugin::Assets'} instead...\n" .
+            "*** I'm setting 'Plugin::Assets' and deleting 'assets'!\n";
+        $catalyst->config->{'Plugin::Assets'} = $config;
+#        delete $catalyst->config->{assets};
+    }
+    else {
+        $config = {};
+    }
+
     
     $config->{stash_var} = "assets" unless exists $config->{stash_var};
 }
@@ -164,7 +180,7 @@ sub assets {
     my $self = shift;
     return $self->{_assets} ||= do {
         my $assets = $self->make_assets;
-        my $config = $self->config->{assets};
+        my $config = $self->config->{'Plugin::Assets'};
         if (defined (my $stash_var = $config->{stash_var})) {
             $self->stash->{$stash_var} = $assets;
         }
@@ -175,7 +191,7 @@ sub assets {
 sub make_assets {
     my $self = shift;
 
-    my $config = $self->config->{assets};
+    my $config = $self->config->{'Plugin::Assets'};
     my $path = $config->{path};
     my $output = $config->{output};
 

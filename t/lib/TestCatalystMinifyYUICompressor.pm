@@ -5,7 +5,7 @@ use strict;
 use base qw/TestCatalystBase/;
 
 __PACKAGE__->setup_(
-    assets => {
+    'Plugin::Assets' => {
         minify => "yuicompressor:./yuicompressor.jar",
     },
 );

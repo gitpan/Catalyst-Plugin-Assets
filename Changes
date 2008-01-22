@@ -1,5 +1,8 @@
 TODO:
 
+0.020 Monday January 21 16:01:06 PST 2008:
+    - Option name change from "assets" to "Plugin::Assets" (per request by mst)
+
 0.012 Wednesday January 09 10:00:54 PST 2008:
     - Repackage release with inc/
 
