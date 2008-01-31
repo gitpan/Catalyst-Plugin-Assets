@@ -1,5 +1,8 @@
 TODO:
 
+0.021 Friday January 25 23:42:00 PST 2008:
+    - Fixed minor POD testing issue
+
 0.020 Monday January 21 16:01:06 PST 2008:
     - Option name change from "assets" to "Plugin::Assets" (per request by mst)
 

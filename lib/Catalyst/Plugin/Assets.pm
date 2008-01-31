@@ -9,11 +9,11 @@ Catalyst::Plugin::Assets - Manage and minify .css and .js assets in a Catalyst a
 
 =head1 VERSION
 
-Version 0.020
+Version 0.021
 
 =cut
 
-our $VERSION = '0.020';
+our $VERSION = '0.021';
 
 =head1 SYNOPSIS
 
@@ -288,7 +288,7 @@ L<File::Assets>, L<JavaScript::Minifier>, L<CSS::Minifier>, L<http://developer.y
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008 Robert Krimen, all rights reserved.
+Copyright 2008 Robert Krimen
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
