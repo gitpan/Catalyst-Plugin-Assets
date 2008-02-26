@@ -9,11 +9,11 @@ Catalyst::Plugin::Assets - Manage and minify .css and .js assets in a Catalyst a
 
 =head1 VERSION
 
-Version 0.021
+Version 0.022
 
 =cut
 
-our $VERSION = '0.021';
+our $VERSION = '0.022';
 
 =head1 SYNOPSIS
 
@@ -83,7 +83,7 @@ The following settings are available:
 
 
     minify      # '1' to use JavaScript::Minifier and CSS::Minifier for minification
-                # 'yui-compressor:<path-to-yui-compressor-jar>' to use YUI Compressor
+                # 'yuicompressor:<path-to-yuicompressor-jar>' to use YUI Compressor
 
 
     stash_var   # The name of the key in the stash that provides the assets object (accessible via $catalyst->stash->{<stash_var}.
@@ -106,7 +106,7 @@ Here is an example configuration:
         
         name => 'Example',
 
-        assets => {
+        'Plugin::Assets' => {
 
             path => "/static",
             output => "built/",
