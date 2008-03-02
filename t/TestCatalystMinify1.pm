@@ -1,8 +1,8 @@
-package TestCatalystMinify1;
+package t::TestCatalystMinify1;
 
 use strict;
 
-use base qw/TestCatalystBase/;
+use base qw/t::TestCatalystBase/;
 
 __PACKAGE__->setup_(
     assets => {

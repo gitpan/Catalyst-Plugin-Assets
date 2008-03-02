@@ -3,21 +3,19 @@
 use strict;
 use warnings;
 
-use FindBin;
-use lib "$FindBin::Bin/lib";
-
 use Test::More qw/no_plan/;
-use Catalyst::Test 'TestCatalystMinify1';
+use t::Test;
+use Catalyst::Test qw/t::TestCatalystMinify1/;
 
-my $scratch = TestCatalystMinify1->scratch;
+my $scratch = t::TestCatalystMinify1->scratch;
 my $response;
 ok($response = request('http://localhost/'));
 
 ok($response = request('http://localhost/fruit-salad'));
-is($response->content, <<_END_);
-<link rel="stylesheet" type="text/css" href="http://localhost/assets.css" />
-<script src="http://localhost/assets.js" type="text/javascript"></script>
-_END_
+compare($response->content, qw(  
+    http://localhost/assets.css
+    http://localhost/assets.js
+));
 
 is($scratch->read("root/assets.css"), "div.auto{font-weight:bold;color:green;}div.apple{color:red;}div.apple{color:blue;}");
 is($scratch->read("root/assets.js"), 'function calculate(){return 1*30/23;}

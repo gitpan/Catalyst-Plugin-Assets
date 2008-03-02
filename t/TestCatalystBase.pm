@@ -1,4 +1,4 @@
-package TestCatalystBase;
+package t::TestCatalystBase;
 
 use strict;
 

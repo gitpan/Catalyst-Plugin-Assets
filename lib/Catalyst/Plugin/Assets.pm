@@ -9,11 +9,11 @@ Catalyst::Plugin::Assets - Manage and minify .css and .js assets in a Catalyst a
 
 =head1 VERSION
 
-Version 0.022
+Version 0.030
 
 =cut
 
-our $VERSION = '0.022';
+our $VERSION = '0.030';
 
 =head1 SYNOPSIS
 
@@ -52,6 +52,8 @@ our $VERSION = '0.022';
 
 Catalyst::Plugin::Assets integrates L<File::Assets> into your Catalyst application. Essentially, it provides a unified way to include .css and .js assets from different parts of your program. When you're done processing a request, you can use $catalyst->assets->export() to generate HTML or $catalyst->assets->exports() to get a list of assets.
 
+C::P::Assets will also handle .css files of different media types properly.
+
 In addition, C::P::Assets includes support for minification via YUI compressor, L<JavaScript::Minifier>, and L<CSS::Minifier> (and a rudimentary concatenation filter)
 
 Note that Catalyst::Plugin::Assets does not serve files directly, it will work with Static::Simple or whatever static-file-serving mechanism you're using.
@@ -61,6 +63,10 @@ Note that Catalyst::Plugin::Assets does not serve files directly, it will work w
 File::Assets is a tool for managing JavaScript and CSS assets in a (web) application. It allows you to "publish" assests in one place after having specified them in different parts of the application (e.g. throughout request and template processing phases).
 
 File::Assets has the added bonus of assisting with minification and filtering of assets. Support is built-in for YUI Compressor (L<http://developer.yahoo.com/yui/compressor/>), L<JavaScript::Minifier>, and L<CSS::Minifier>. Filtering is fairly straightforward to implement, so it's a good place to start if need a JavaScript or CSS preprocessor (e.g. something like SASS L<http://haml.hamptoncatlin.com/docs/rdoc/classes/Sass.html/>)
+
+=head1 USAGE
+
+For usage hints and tips, see L<File::Assets>
 
 =head1 CONFIGURATION
 
@@ -76,8 +82,7 @@ The following settings are available:
                 # doing ->include("/static/stylesheet.css") you can just do ->include("stylesheet.css")
                 
 
-    output      # The path to output the results of minification under (if any).
-
+    output_path # The path to output the results of minification under (if any).
                 # For example, if output is "built/" (the trailing slash is important), then minified assets will be
                 # written to "root/<assets-path>/built/..."
 
@@ -109,7 +114,7 @@ Here is an example configuration:
         'Plugin::Assets' => {
 
             path => "/static",
-            output => "built/",
+            output_path => "built/",
             minify => 1,
 
             stash_var => "assets", # This is the default setting
@@ -148,9 +153,8 @@ sub setup {
         warn
             "\n*** Setting ${catalyst}->config->{assets} has been deprecated!\n" .
             "*** Please update your configuration to use ${catalyst}->config->{'Plugin::Assets'} instead...\n" .
-            "*** I'm setting 'Plugin::Assets' and deleting 'assets'!\n";
+            "*** I'm copying 'assets' into 'Plugin::Assets' ...\n";
         $catalyst->config->{'Plugin::Assets'} = $config;
-#        delete $catalyst->config->{assets};
     }
     else {
         $config = {};
@@ -193,43 +197,35 @@ sub make_assets {
 
     my $config = $self->config->{'Plugin::Assets'};
     my $path = $config->{path};
-    my $output = $config->{output};
+    my $output_path = $config->{output_path} || $config->{output};
 
-    my $assets = File::Assets->new(base => [ $self->uri_for("/"), $self->path_to("root"), $path ]);
+    my @filter;
 
+    if ($output_path && ref $output_path ne "ARRAY") {
+        $output_path = [ [ "*", $output_path ] ]; 
+    }
+
+    # Different from previous version, KISS
     if (my $minify = $config->{minify}) {
-        my @filter;
-        if (ref $minify eq "HASH" && ! $minify->{disable}) {
-            for(qw/css js/) {
-                push @filter, [ $minify->{$_}, type => $_, output => $output ] if $minify->{$_};
-            }
+        if ($minify =~ m/^\s*(?:on|yes|true|1)\s*$/i) {
+            push @filter, [ js => qw/minifier/ ];
+            push @filter, [ css => qw/minifier/ ];
         }
-        elsif (ref $minify eq "ARRAY") {
-            if ($minify->[0] && ref $minify->[0] eq "HASH") {
-                for my $filter (@$minify) {
-                    my %filter = %$filter;
-                    $filter = delete $filter{filter};
-                    push @filter, [ $filter, output => $output, %filter ];
-                }
-            }
-            else {
-                push @filter, [ @$minify, type => $_, output => $output ] for qw/css js/;
-            }
+        elsif ($minify =~ m/^\s*(?:off|no|false|0)\s*$/i) {
+        }
+        elsif (ref $minify eq "") { # yuicompressor:... etc.
+            push @filter, [ $minify ];
         }
         else {
-            if ($minify =~ m/^\s*(?:on|yes|true|1)\s*$/i) {
-                push @filter, [ qw/minifier-js type js/, output => $output ];
-                push @filter, [ qw/minifier-css type css/, output => $output ];
-            }
-            elsif ($minify =~ m/^\s*(?:off|no|false|0)\s*$/i) {
-            }
-            else {
-                push @filter, [ $minify, type => $_, output => $output ] for qw/css js/;
-            }
+            die "Don't understand minify option: $minify";
         }
-
-        $assets->filter(@$_) for @filter;
     }
+
+    my $assets = File::Assets->new(
+        base => [ $self->uri_for("/"), $self->path_to("root"), $path ],
+        output_path => $output_path,
+        filter => \@filter,
+    );
 
     if (my $customize = $config->{customize}) {
         $customize->($assets, $self);

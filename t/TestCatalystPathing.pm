@@ -1,8 +1,8 @@
-package TestCatalystPathing;
+package t::TestCatalystPathing;
 
 use strict;
 
-use base qw/TestCatalystBase/;
+use base qw/t::TestCatalystBase/;
 
 __PACKAGE__->setup_(
     assets => {
