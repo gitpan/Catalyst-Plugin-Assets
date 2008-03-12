@@ -1,5 +1,8 @@
 TODO:
 
+0.031 Tuesday March 11 21:30:57 PDT 2008:
+    - Update to be compatible with File::Assets 0.051
+
 0.030 Sunday March 02 00:29:08 PST 2008:
     - Update to ensure compatibility with File::Assts 0.50
       See File::Assets for more information

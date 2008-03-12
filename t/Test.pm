@@ -17,7 +17,7 @@ sub compare ($;@) {
             my $href = shift;
             my ($kind) = $href =~ m/\.([^.]+)$/;
             if ($kind eq "js") {
-                push @content, SCRIPT({ type => "text/javascript", src => $href });
+                push @content, SCRIPT({ type => "text/javascript", src => $href, _ => "" });
             }
             elsif ($kind =~ m/^css\b/) {
                 my ($type, $media) = split m/-/, $kind;
