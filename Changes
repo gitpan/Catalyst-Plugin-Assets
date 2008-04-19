@@ -1,27 +1,30 @@
 TODO:
 
+0.032 Saturday April 19 03:03:45 PDT 2008:
+ - Bump for packaging error (*grumble* *grumble* META.yaml inc/ *grumble*)
+
 0.031 Tuesday March 11 21:30:57 PDT 2008:
-    - Update to be compatible with File::Assets 0.051
+ - Update to be compatible with File::Assets 0.051
 
 0.030 Sunday March 02 00:29:08 PST 2008:
-    - Update to ensure compatibility with File::Assts 0.50
-      See File::Assets for more information
+ - Update to ensure compatibility with File::Assts 0.50
+   See File::Assets for more information
 
 0.022 Tuesday February 26 14:40:35 PST 2008:
-    - Minor documentation tweaks, thanks patspam
+ - Minor documentation tweaks, thanks patspam
 
 0.021 Friday January 25 23:42:00 PST 2008:
-    - Fixed minor POD testing issue
+ - Fixed minor POD testing issue
 
 0.020 Monday January 21 16:01:06 PST 2008:
-    - Option name change from "assets" to "Plugin::Assets" (per request by mst)
+ - Option name change from "assets" to "Plugin::Assets" (per request by mst)
 
 0.012 Wednesday January 09 10:00:54 PST 2008:
-    - Repackage release with inc/
+ - Repackage release with inc/
 
 0.011 Wednesday January 09 01:08:12 PST 2008:
-    - Included an example configuration and some more documentation
-    - Fixed a test that won't pass if yuicompressor.jar isn't available
+ - Included an example configuration and some more documentation
+ - Fixed a test that won't pass if yuicompressor.jar isn't available
 
 0.01 Tuesday January 08 22:40:17 PST 2008:
-    - Initial release
+ - Initial release

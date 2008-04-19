@@ -12,7 +12,7 @@ build_requires 'HTML::Declare';
 
 requires 'Catalyst';
 requires 'Class::Accessor::Fast';
-requires 'File::Assets' => '0.051';
+requires 'File::Assets' => '0.056';
 requires 'JavaScript::Minifier';
 requires 'CSS::Minifier';
 
