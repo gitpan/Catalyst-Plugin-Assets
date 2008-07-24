@@ -1,5 +1,16 @@
 TODO:
 
+0.034 Thursday July 24 13:26:18 PDT 2008: 
+ - Non-developer release 
+ - Only compatible with File::Assets 0.061
+
+0.033_0 Wednesday July 23 13:05:54 PDT 2008:
+ - More updates to become compatible with File::Assets 0.060_*
+ - Changed the asset configuration subroutine but kept the spirit
+
+0.033 Tuesday June 10 14:50:09 PDT 2008:
+ - Upgrade t/ to be compatible with latest File::Assets
+
 0.032 Saturday April 19 03:03:45 PDT 2008:
  - Bump for packaging error (*grumble* *grumble* META.yaml inc/ *grumble*)
 

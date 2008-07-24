@@ -7,7 +7,13 @@ use Test::More;
 use HTML::Declare qw/LINK SCRIPT STYLE/;
 use base qw/Exporter/;
 use vars qw/@EXPORT/;
-@EXPORT = qw/compare/;
+@EXPORT = qw/compare sanitize/;
+
+sub sanitize ($) {
+    my $css = shift;
+    $css =~ s/;}/}/g;
+    return $css;
+}
 
 sub compare ($;@) {
     my $expect = shift;              

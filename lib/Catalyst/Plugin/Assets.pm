@@ -9,11 +9,11 @@ Catalyst::Plugin::Assets - Manage and minify .css and .js assets in a Catalyst a
 
 =head1 VERSION
 
-Version 0.032
+Version 0.034
 
 =cut
 
-our $VERSION = '0.032';
+our $VERSION = '0.034';
 
 =head1 SYNOPSIS
 
@@ -54,15 +54,13 @@ Catalyst::Plugin::Assets integrates L<File::Assets> into your Catalyst applicati
 
 C::P::Assets will also handle .css files of different media types properly.
 
-In addition, C::P::Assets includes support for minification via YUI compressor, L<JavaScript::Minifier>, and L<CSS::Minifier> (and a rudimentary concatenation filter)
+In addition, C::P::Assets includes support for minification via YUI compressor, L<JavaScript::Minifier>, L<CSS::Minifier>, L<JavaScript::Minifier::XS>, and L<CSS::Minifier::XS>
 
 Note that Catalyst::Plugin::Assets does not serve files directly, it will work with Static::Simple or whatever static-file-serving mechanism you're using.
 
 =head2 A brief description of L<File::Assets>
 
-File::Assets is a tool for managing JavaScript and CSS assets in a (web) application. It allows you to "publish" assests in one place after having specified them in different parts of the application (e.g. throughout request and template processing phases).
-
-File::Assets has the added bonus of assisting with minification and filtering of assets. Support is built-in for YUI Compressor (L<http://developer.yahoo.com/yui/compressor/>), L<JavaScript::Minifier>, and L<CSS::Minifier>. Filtering is fairly straightforward to implement, so it's a good place to start if need a JavaScript or CSS preprocessor (e.g. something like SASS L<http://haml.hamptoncatlin.com/docs/rdoc/classes/Sass.html/>)
+L<File::Assets> is a tool for managing JavaScript and CSS assets in a (web) application. It allows you to "publish" assests in one place after having specified them in different parts of the application (e.g. throughout request and template processing phases).
 
 =head1 USAGE
 
@@ -199,22 +197,16 @@ sub make_assets {
     my $path = $config->{path};
     my $output_path = $config->{output_path} || $config->{output};
 
-    my @filter;
-
-    if ($output_path && ref $output_path ne "ARRAY") {
-        $output_path = [ [ "*", $output_path ] ]; 
-    }
-
+    my %assets;
     # Different from previous version, KISS
     if (my $minify = $config->{minify}) {
-        if ($minify =~ m/^\s*(?:on|yes|true|1)\s*$/i) {
-            push @filter, [ js => qw/minifier/ ];
-            push @filter, [ css => qw/minifier/ ];
+        if ($minify =~ m/^\s*(?:on|yes|true)\s*$/i) {
+            $assets{minify} = 1;
         }
         elsif ($minify =~ m/^\s*(?:off|no|false|0)\s*$/i) {
         }
         elsif (ref $minify eq "") { # yuicompressor:... etc.
-            push @filter, [ $minify ];
+            $assets{minify} = $minify;
         }
         else {
             die "Don't understand minify option: $minify";
@@ -222,9 +214,9 @@ sub make_assets {
     }
 
     my $assets = File::Assets->new(
-        base => [ $self->uri_for("/"), $self->path_to("root"), $path ],
+        base => { uri => $self->uri_for("/"), dir => $self->path_to("root"), path => $path },
         output_path => $output_path,
-        filter => \@filter,
+        %assets,
     );
 
     if (my $customize = $config->{customize}) {

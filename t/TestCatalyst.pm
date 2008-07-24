@@ -7,8 +7,8 @@ use base qw/t::TestCatalystBase/;
 __PACKAGE__->setup_(
     'Plugin::Assets' => {
         output_path => [
-            [ ":yuicompressor" => "static/yui-compressor/" ],
-            [ ":concat" => "static/concat/" ],
+            [ ":yuicompressor" => "static/yui-compressor/%n%-l.%e" ],
+            [ ":concat" => "static/concat/%n%-l.%e" ],
         ],
     },
 );

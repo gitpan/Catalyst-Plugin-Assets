@@ -17,6 +17,6 @@ compare($response->content, qw(
     http://localhost/assets.js
 ));
 
-is($scratch->read("root/assets.css"), "div.auto{font-weight:bold;color:green;}div.apple{color:red;}div.apple{color:blue;}");
+is(sanitize $scratch->read("root/assets.css"), "div.auto{font-weight:bold;color:green}div.apple{color:red}div.apple{color:blue}");
 is($scratch->read("root/assets.js"), 'function calculate(){return 1*30/23;}
 var auto=8+4;alert("Automatically "+auto);var apple=1+4;alert("Apple is "+apple);');

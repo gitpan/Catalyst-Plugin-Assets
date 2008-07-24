@@ -7,7 +7,7 @@ use base qw/t::TestCatalystBase/;
 __PACKAGE__->setup_(
     assets => {
         path => "/static",
-        output => "built/",
+        output => "built/%n%-l.%e",
         minify => 1,
     },
 );
