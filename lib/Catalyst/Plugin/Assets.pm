@@ -9,11 +9,11 @@ Catalyst::Plugin::Assets - Manage and minify .css and .js assets in a Catalyst a
 
 =head1 VERSION
 
-Version 0.034
+Version 0.035
 
 =cut
 
-our $VERSION = '0.034';
+our $VERSION = '0.035';
 
 =head1 SYNOPSIS
 
@@ -270,7 +270,19 @@ L<http://search.cpan.org/dist/Catalyst-Plugin-Assets>
 
 =head1 SEE ALSO
 
-L<File::Assets>, L<JavaScript::Minifier>, L<CSS::Minifier>, L<http://developer.yahoo.com/yui/compressor/>, L<Catalyst>
+L<File::Assets>
+
+L<Catalyst>
+
+L<http://developer.yahoo.com/yui/compressor/>
+
+L<JavaScript::Minifier::XS>
+
+L<CSS::Minifier::XS>
+
+L<JavaScript::Minifier>
+
+L<CSS::Minifier>
 
 =head1 ACKNOWLEDGEMENTS
 

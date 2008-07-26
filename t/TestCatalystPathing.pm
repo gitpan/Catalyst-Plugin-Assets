@@ -8,7 +8,7 @@ __PACKAGE__->setup_(
     assets => {
         path => "/static",
         output => "built/%n%-l.%e",
-        minify => 1,
+        minify => "minifier",
     },
 );
 

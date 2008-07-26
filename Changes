@@ -1,5 +1,8 @@
 TODO:
 
+0.035 Saturday July 26 12:21:04 PDT 2008: 
+ - Minor tweak to fix failing test when only *::Minifier is available
+
 0.034 Thursday July 24 13:26:18 PDT 2008: 
  - Non-developer release 
  - Only compatible with File::Assets 0.061
@@ -18,7 +21,7 @@ TODO:
  - Update to be compatible with File::Assets 0.051
 
 0.030 Sunday March 02 00:29:08 PST 2008:
- - Update to ensure compatibility with File::Assts 0.50
+ - Update to ensure compatibility with File::Assets 0.50
    See File::Assets for more information
 
 0.022 Tuesday February 26 14:40:35 PST 2008:
