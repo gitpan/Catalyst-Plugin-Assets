@@ -15,7 +15,6 @@ inc/Module/Install/Metadata.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Catalyst/Plugin/Assets.pm
-t/000-load.t
 t/002-assets.t
 t/004-caching.t
 t/010-configuration-minify-1.t

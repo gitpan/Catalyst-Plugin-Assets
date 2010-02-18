@@ -13,7 +13,7 @@ __PACKAGE__->setup_(
     },
 );
 
-sub yui_compressor : Path('yui-compressor') {
+sub yui_compressor :Path('yui-compressor') {
     my ($self, $catalyst) = @_;
     
     $catalyst->assets->filter(css => "yuicompressor:./yuicompressor.jar");
@@ -22,7 +22,7 @@ sub yui_compressor : Path('yui-compressor') {
     $catalyst->response->output($catalyst->assets->export);
 }
 
-sub concat : Path('concat') {
+sub concat :Path('concat') {
     my ($self, $catalyst) = @_;
     
     $catalyst->assets->filter("concat");

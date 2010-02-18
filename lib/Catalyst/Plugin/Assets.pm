@@ -9,11 +9,11 @@ Catalyst::Plugin::Assets - Manage and minify .css and .js assets in a Catalyst a
 
 =head1 VERSION
 
-Version 0.035
+Version 0.036
 
 =cut
 
-our $VERSION = '0.035';
+our $VERSION = '0.036';
 
 =head1 SYNOPSIS
 
@@ -142,7 +142,7 @@ __PACKAGE__->mk_accessors(qw/_assets/);
 sub setup {
     my $catalyst = shift;
     
-    $catalyst->NEXT::setup(@_);
+    $catalyst->maybe::next::method(@_);
     
     my $config;
     if ($config = $catalyst->config->{'Plugin::Assets'}) {
@@ -165,7 +165,7 @@ sub setup {
 sub prepare {
     my $self = shift;
     
-    my $catalyst = $self->NEXT::prepare(@_);
+    my $catalyst = $self->maybe::next::method(@_);
 
     $catalyst->assets; # Instantiate some new assets to use for this request
 
